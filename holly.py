@@ -44,6 +44,7 @@ if __name__ == '__main__':
 	print ('Press Ctrl-C to quit.')
 	while True:
 		# Color wipe animations.
-		staticPattern(strip, 6, Color(0, 255, 0), Color(200, 0, 20), Color(0,0,0,30))  
+		staticPattern(strip, 6, Color(10, 100 , 0), Color(80, 0, 1), Color(80,80,10))
+		  
 		
 		
