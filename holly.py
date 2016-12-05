@@ -4,7 +4,6 @@
 # Direct port of the Arduino NeoPixel library strandtest example.  Showcases
 # various animations on a strip of NeoPixels.
 import time
-import numpy as np
 
 from neopixel import *
 
@@ -21,29 +20,18 @@ LED_STRIP	  = ws.SK6812W_STRIP
 
 
 # Define functions which animate LEDs in various ways.
-def twinkle(strip, spacing, min_period, max_period, dt=50):
-	lights = range(0,strip.numPixels(),spacing)
-	N = len(lights)
-	
-	omegas = np.random.uniform(np.pi/max_period, np.pi/min_period, N)
-#	phis = np.pi*np.random.rand(N)
-	phis = np.arange(N)%2 * np.pi/2
-	
-	t=0
-	while True:
-		values = np.sin(omegas*t-phis)**4
-		whites = 100*values
-		reds = 0*values
-		greens = 0*values
-		blues = 0*values
-		t+=dt/1000.
-	
-		for i in range(N):
-#			print(lights[i])
-#			print(values[i])
-			strip.setPixelColor(lights[i], Color(np.int(reds[i]),np.int(greens[i]),np.int(blues[i]),np.int(whites[i])))
-		strip.show()
-		time.sleep(dt/1000.0)
+def staticPattern(strip, spacing, color1, color2, color3):
+	"""Wipe color across display a pixel at a time."""
+	for i in range(strip.numPixels()):
+		if i%spacing==0 or i%spacing==2:
+			strip.setPixelColor(i, color1)
+		elif i%spacing==1:
+			strip.setPixelColor(i, color2)
+		elif i%spacing==spacing/2+1:
+			strip.setPixelColor(i, color3)
+		else:
+			strip.setPixelColor(i, Color(0,0,0))
+	strip.show()
 
 
 # Main program logic follows:
@@ -55,5 +43,7 @@ if __name__ == '__main__':
 
 	print ('Press Ctrl-C to quit.')
 	while True:
-		twinkle(strip, 1, 3, 6)  
+		# Color wipe animations.
+		staticPattern(strip, 6, Color(0, 255, 0), Color(200, 0, 20), Color(0,0,0,30))  
+		
 		

@@ -30,7 +30,7 @@ def colorLeap(strip, spacing, reps, color1, color2, wait_ms=50):
 				elif (i-j)%spacing==0 and j%2==1:
 					strip.setPixelColor(i, color2)
 				elif (i-j+2)%spacing==0:
-					strip.setPixelColor(i, Color(3,2,0,0)) 
+					strip.setPixelColor(i, Color(0,0,0,0)) 
 			strip.show()
 			time.sleep(wait_ms/1000.0)
 
@@ -46,7 +46,7 @@ if __name__ == '__main__':
 	while True:
 		# Color wipe animations.
 		colorLeap(strip, 8, 3, Color(255, 0, 0), Color(0, 255, 0), 300)  
-	#	colorLeap(strip, 8, 3, Color(0, 0, 255), Color(147,80, 0), 300)  
-	#	colorLeap(strip, 8, 3, Color(200, 0, 255), Color(180,20, 40), 300)  
+		colorLeap(strip, 8, 3, Color(0, 0, 255), Color(147,80, 0), 300)  
+		colorLeap(strip, 8, 3, Color(200, 0, 255), Color(180,20, 40), 300)  
 #		time.sleep(2)
 		
