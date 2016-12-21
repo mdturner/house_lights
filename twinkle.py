@@ -9,7 +9,7 @@ import numpy as np
 from neopixel import *
 
 # LED strip configuration:
-LED_COUNT	  = 150	  # Number of LED pixels.
+LED_COUNT	  = 434	  # Number of LED pixels.
 LED_PIN		= 18	  # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ	= 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA		= 5	   # DMA channel to use for generating signal (try 5)
@@ -21,17 +21,17 @@ LED_STRIP	  = ws.SK6812W_STRIP
 
 
 # Define functions which animate LEDs in various ways.
-def twinkle(strip, spacing, min_period, max_period, dt=50):
+def twinkle(strip, spacing, min_period, max_period, dt=20):
 	lights = range(0,strip.numPixels(),spacing)
 	N = len(lights)
 	
-	omegas = np.random.uniform(np.pi/max_period, np.pi/min_period, N)
-#	phis = np.pi*np.random.rand(N)
-	phis = np.arange(N)%2 * np.pi/2
+	omegas = np.random.uniform(2*np.pi/max_period, 2*np.pi/min_period, N)
+	phis = np.pi*np.random.rand(N)
+#	phis = np.arange(N)%2 * np.pi/2
 	
 	t=0
 	while True:
-		values = np.sin(omegas*t-phis)**4
+		values = np.clip(2*np.sin(omegas*t-phis)-1,0,1)**4
 		whites = 100*values
 		reds = 0*values
 		greens = 0*values
@@ -55,5 +55,5 @@ if __name__ == '__main__':
 
 	print ('Press Ctrl-C to quit.')
 	while True:
-		twinkle(strip, 1, 3, 6)  
+		twinkle(strip, 2, 3, 6)  
 		

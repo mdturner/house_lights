@@ -8,7 +8,7 @@ import time
 from neopixel import *
 
 # LED strip configuration:
-LED_COUNT	  = 150	  # Number of LED pixels.
+LED_COUNT	  = 434	  # Number of LED pixels.
 LED_PIN		= 18	  # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ	= 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA		= 5	   # DMA channel to use for generating signal (try 5)
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 	print ('Press Ctrl-C to quit.')
 	while True:
 		# Color wipe animations.
-		staticPattern(strip, 6, Color(10, 100 , 0), Color(80, 0, 1), Color(80,80,10))
+		staticPattern(strip, 10, Color(10, 100 , 0), Color(80, 0, 1), Color(20,20,0,50))
 		  
 		
 		
