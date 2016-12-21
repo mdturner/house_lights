@@ -4,6 +4,7 @@
 # Direct port of the Arduino NeoPixel library strandtest example.  Showcases
 # various animations on a strip of NeoPixels.
 import time
+import lights_util as lu
 
 from neopixel import *
 
@@ -41,10 +42,8 @@ if __name__ == '__main__':
 	# Intialize the library (must be called once before other functions).
 	strip.begin()
 
-	print ('Press Ctrl-C to quit.')
-	while True:
-		# Color wipe animations.
-		staticPattern(strip, 10, Color(10, 100 , 0), Color(80, 0, 1), Color(20,20,0,50))
-		  
-		
-		
+	lu.makeSwitch()
+	staticPattern(strip, 10, Color(10, 100 , 0), Color(80, 0, 1), Color(20,20,0,50))
+	while lu.checkSwitch():
+		  time.sleep(1)
+	lu.blackOut(strip)
