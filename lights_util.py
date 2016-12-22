@@ -1,4 +1,4 @@
-import sys, os.path, time
+import sys, os.path, time, timeit
 from neopixel import *
 
 def blackOut(strip):
@@ -13,4 +13,22 @@ def checkSwitch():
 	return os.path.isfile(sys.path[0]+'/lights_on')
 	
 def clearSwitch():
-	os.remove(sys.path[0]+'/lights_on')
+	try:
+		os.remove(sys.path[0]+'/lights_on')
+	except:
+		pass
+	
+class fpsTimer(object):
+	def __init__(self, fps):
+		self.fps = fps
+		self.dt = 1./fps
+		self.tic = time.time()
+		
+	def wait(self):
+		tic = self.tic
+		toc = time.time()
+		if toc-tic>self.dt:
+			print(str(1./(toc-tic))+' < '+str(self.fps))
+		else:
+			time.sleep(self.dt-(toc-tic))
+		self.tic = time.time()
