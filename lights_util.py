@@ -24,6 +24,12 @@ class fpsTimer(object):
 		self.dt = 1./fps
 		self.tic = time.time()
 		
+	def dt(self):
+		toc = time.time()
+		dt = toc - self.tic
+		tic = toc
+		return dt
+		
 	def wait(self):
 		tic = self.tic
 		toc = time.time()
