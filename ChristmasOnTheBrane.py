@@ -2,6 +2,7 @@ from neopixel import *
 import math
 import time
 import numpy as np
+import lights_util as lu
 
 LED_COUNT	  = 434	  # Number of LED pixels.
 LED_PIN		= 18	  # GPIO pin connected to the pixels (must support PWM!).
@@ -17,7 +18,8 @@ TIME_PERIOD = 4.0
 
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
 
-dt = 1/24.0
+fps = 24.0
+dt = 1/fps
 G = 200
 braneSpacing = 20
 boundary = LED_COUNT/2.0
@@ -30,7 +32,9 @@ if __name__ == "__main__":
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
     strip.begin()
 
-    while True:
+    lu.makeSwitch()
+    timer = lu.fpsTimer(fps) 
+    while lu.checkSwitch():
         t = time.time()
 
 	for massCounter in xrange(4):
@@ -71,4 +75,4 @@ if __name__ == "__main__":
 		pixel[3] += 255;
             strip.setPixelColorRGB(i, pixel[0], pixel[1], pixel[2], pixel[3] )
         strip.show()
-        time.sleep(dt)
+        timer.wait()
