@@ -22,11 +22,10 @@ LED_STRIP	  = ws.SK6812W_STRIP
 
 
 # Define functions which animate LEDs in various ways.
-def twinkle(strip, spacing, min_period, max_period, fps=22):
+def twinkle(strip, spacing, min_period, max_period, fps=24):
 	lights = range(0,strip.numPixels(),spacing)
 	N = len(lights)
-	dt = strip.numPixels()*32.0/ws.ws2811_t_freq_get(strip._leds)
-	print(dt)
+	dt = 1./fps
 	
 	omegas = np.random.uniform(2*np.pi/max_period, 2*np.pi/min_period, N)
 	phis = np.pi*np.random.rand(N)
@@ -36,17 +35,17 @@ def twinkle(strip, spacing, min_period, max_period, fps=22):
 
 	timer = lu.fpsTimer(fps) 
 	while lu.checkSwitch():
-		values = np.clip(2*np.sin(omegas*t-phis)-1,0,1)**4
-		whites = 100*values
-		reds = 0*values
-		greens = 0*values
-		blues = 0*values
+		values = np.clip(2*np.sin(omegas*t-phis)-1,0,1)
+		whites = np.int_(100*values)
+		reds = np.int_(20*values)
+		greens = np.int_(15*values)
+		blues = np.int_(0*values)
 		t+=dt
 	
 		for i in range(N):
 #			print(lights[i])
 #			print(values[i])
-			strip.setPixelColor(lights[i], Color(np.int(reds[i]),np.int(greens[i]),np.int(blues[i]),np.int(whites[i])))
+			strip.setPixelColor(lights[i], (whites[i]<<24)|(reds[i]<<16)|(greens[i]<<8)|(blues[i]))
 		strip.show()
 		timer.wait()
 
@@ -58,5 +57,5 @@ if __name__ == '__main__':
 	strip.begin()
 	
 	lu.makeSwitch()
-	twinkle(strip, 2, 3, 6)  
+	twinkle(strip, 3, 4, 8)  
 	lu.blackOut(strip)	
