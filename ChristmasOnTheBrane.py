@@ -26,10 +26,13 @@ boundary = LED_COUNT/2.0
 
 cloud_width = 2.0
 
+X = np.linspace(-boundary,boundary,LED_COUNT)[:,None]
+color_scale = np.power(2,8*np.arange(4))
+
 m = [1.0,1.0,1.0,1.0]
 x = np.random.rand(1,4) * 2.0* boundary - boundary
-X = np.linspace(-boundary,boundary,LED_COUNT)[:,None]
 v = [0.0, 0.0, 0.0,0.0];
+
 
 if __name__ == "__main__":
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
@@ -67,9 +70,10 @@ if __name__ == "__main__":
 	
 	#intensity = np.int_(255*np.exp(-(X-x)**2./cloud_width**2.))
 	intensity = 255*(abs(X-x)<cloud_width)
-
+	colors = np.dot(color_scale, intensity.T)
+	
 	#Display begins
         for i in xrange(strip.numPixels()):
-	    	strip.setPixelColorRGB(i, intensity[i][0], intensity[i][1], intensity[i][2], intensity[i][3] )
+	    	strip.setPixelColor(i, np.long(colors[i]))
         strip.show()
         timer.wait()
