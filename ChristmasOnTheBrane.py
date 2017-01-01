@@ -24,8 +24,11 @@ G = 200
 braneSpacing = 20
 boundary = LED_COUNT/2.0
 
+cloud_width = 2.0
+
 m = [1.0,1.0,1.0,1.0]
 x = np.random.rand(1,4) * 2.0* boundary - boundary
+X = np.linspace(-boundary,boundary,LED_COUNT)[:,None]
 v = [0.0, 0.0, 0.0,0.0];
 
 if __name__ == "__main__":
@@ -61,18 +64,11 @@ if __name__ == "__main__":
 	
 	#Step Forward with Euler round two
 	x = np.add( x , np.multiply(v, dt))
+	
+	intensity = 255*np.exp(-(X-x)**2./cloud_width**2.)
 
 	#Display begins
         for i in xrange(strip.numPixels()):
-	    pixel  = [0, 0, 0, 0];
-	    if abs( i - ( x[0][0] + boundary ) ) < 3 :
-		pixel[0] += 255;
-	    if abs( i - (x[0][1] + boundary) ) < 3 :
-		pixel[1] += 255;
-	    if abs( i - (x[0][2] + boundary) ) < 3 :
-		pixel[2] += 255;
-	    if abs( i - (x[0][3] + boundary) ) < 3 :
-		pixel[3] += 255;
-            strip.setPixelColorRGB(i, pixel[0], pixel[1], pixel[2], pixel[3] )
+	    	strip.setPixelColorRGB(i, intensity[i][0], intensity[i][1], intensity[i][2], intensity[i][3] )
         strip.show()
         timer.wait()
