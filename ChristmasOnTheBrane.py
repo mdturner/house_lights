@@ -65,7 +65,8 @@ if __name__ == "__main__":
 	#Step Forward with Euler round two
 	x = np.add( x , np.multiply(v, dt))
 	
-	intensity = np.int_(255*np.exp(-(X-x)**2./cloud_width**2.))
+	#intensity = np.int_(255*np.exp(-(X-x)**2./cloud_width**2.))
+	intensity = 255*(abs(X-x)<cloud_width)
 
 	#Display begins
         for i in xrange(strip.numPixels()):
