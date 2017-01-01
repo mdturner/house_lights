@@ -74,6 +74,7 @@ if __name__ == "__main__":
 	
 	#Display begins
         for i in xrange(strip.numPixels()):
-	    	strip.setPixelColor(i, np.long(colors[i]))
+#	    	strip.setPixelColor(i, np.long(colors[i]))
+			strip.setPixelColorRGB(i, intensity[i,0], intensity[i,1], intensity[i,2], intensity[i,3]) 
         strip.show()
         timer.wait()
