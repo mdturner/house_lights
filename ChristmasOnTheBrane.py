@@ -30,8 +30,10 @@ color_scale = np.power(2,8*np.arange(4))
 m = [1.0,1.0,1.0,1.0]
 
 def gravity(run_time):
-	x = np.random.rand(1,4) * 2.0* boundary - boundary
-	v = [0.0, 0.0, 0.0,0.0]
+	x = 0
+	while np.ptp(x)<1.5*boundary:
+		x = np.random.rand(1,4) * 2.0* boundary - boundary
+	v = [0.0, 0.0, 0.0, 0.0]
 	timer = lu.fpsTimer(fps) 
 	
 	for n in xrange(int(run_time/dt)):
@@ -84,5 +86,5 @@ if __name__ == "__main__":
 	lu.makeSwitch()
 	
 	while lu.checkSwitch():
-		gravity(600)
+		gravity(400)
 		
