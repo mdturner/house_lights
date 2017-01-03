@@ -1,3 +1,5 @@
+# Contributed by Charlie Hagedorn, refactored for better performance and Gaussian mass profiles by Matt Turner
+
 from neopixel import *
 import math
 import time
