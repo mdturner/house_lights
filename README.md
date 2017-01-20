@@ -1,6 +1,6 @@
 # house_lights
 
-Routines and controls for a home installation of SK6812 RGB LEDs.
+Routines and controls for a home installation of SK6812 RGB LEDs.  Uses https://github.com/jgarff/rpi_ws281x on a Raspberry Pi.  
 
 See https://github.com/rephorm/neopixel-simulator for a drop-in simulator.
 
