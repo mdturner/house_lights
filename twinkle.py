@@ -37,9 +37,9 @@ def twinkle(strip, spacing, min_period, max_period, fps=24):
 	while lu.checkSwitch():
 		values = np.clip(2*np.sin(omegas*t-phis)-1,0,1)
 		whites = np.int_(100*values)
-		reds = np.int_(20*values)
-		greens = np.int_(15*values)
-		blues = np.int_(0*values)
+		reds = np.int_(70*values)
+		greens = np.int_(65*values)
+		blues = np.int_(50*values)
 		t+=dt
 	
 		for i in range(N):
