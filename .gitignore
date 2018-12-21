@@ -1,5 +1,6 @@
 lights_on
 *~
+.vs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
