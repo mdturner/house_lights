@@ -4,12 +4,13 @@
 # Direct port of the Arduino NeoPixel library strandtest example.  Showcases
 # various animations on a strip of NeoPixels.
 import time
-
-from neopixel import *
+import math
 import lights_util as lu
 
+from neopixel import *
+
 # LED strip configuration:
-LED_COUNT      = 434      # Number of LED pixels.
+LED_COUNT      = 430      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
@@ -21,19 +22,17 @@ LED_STRIP      = ws.WS2812_STRIP
 
 
 # Define functions which animate LEDs in various ways.
-def colorLeap(strip, spacing, reps, color1, color2, wait_ms=50):
-    """Wipe color across display a pixel at a time."""
-    for k in range(reps):
-        for j in range(spacing):
-            for i in range(strip.numPixels()):
-                if (i-j)%spacing==0 and j%2==0:
-                    strip.setPixelColor(i, color1)
-                elif (i-j)%spacing==0 and j%2==1:
-                    strip.setPixelColor(i, color2)
-                elif (i-j+2)%spacing==0:
-                    strip.setPixelColor(i, Color(0,0,0,0)) 
-            strip.show()
-            time.sleep(wait_ms/1000.0)
+def wave(strip, period, l, max, min):
+    t = 0.0
+    offset = (max + min)/2
+    A = max - offset
+    
+    while lu.checkSwitch():
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i,Color(0,0,int(offset+ A*math.sin(2*math.pi*(1.0*t/period - 1.0*i/l)))))
+
+        strip.show()
+        t = t+1
 
 
 # Main program logic follows:
@@ -42,12 +41,9 @@ if __name__ == '__main__':
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
     # Intialize the library (must be called once before other functions).
     strip.begin()
-    lu.makeSwitch()
 
-    while lu.checkSwitch():
-        # Color wipe animations.
-        colorLeap(strip, 8, 3, Color(255, 0, 0), Color(0, 255, 0), 300)  
-#        colorLeap(strip, 8, 3, Color(0, 0, 255), Color(147,80, 0), 300)  
-#        colorLeap(strip, 8, 3, Color(200, 0, 255), Color(180,20, 40), 300)  
-#        time.sleep(2)
-        
+    lu.makeSwitch()
+    lu.blackOut(strip)
+    
+    wave(strip, 300, 100, 50, 10)
+    lu.blackOut(strip)
