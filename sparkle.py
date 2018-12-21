@@ -9,7 +9,7 @@ LED_DMA		= 5	   # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255	 # Set to 0 for darkest and 255 for brightest
 LED_INVERT	 = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL	= 0
-LED_STRIP	  = ws.SK6812_STRIP_RGBW
+LED_STRIP	  = ws.WS2812_STRIP 
 
 SPACE_PERIOD = 10.0
 TIME_PERIOD = 4.0

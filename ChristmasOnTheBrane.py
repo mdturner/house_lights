@@ -14,7 +14,7 @@ LED_DMA		= 5	   # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255	 # Set to 0 for darkest and 255 for brightest
 LED_INVERT	 = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL	= 0	
-LED_STRIP	  = ws.SK6812W_STRIP
+LED_STRIP	  = ws.WS2812_STRIP 
 
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
 
@@ -27,7 +27,9 @@ boundary = LED_COUNT/2.0
 cloud_width = 2.0
 
 X = np.linspace(-boundary,boundary,LED_COUNT)[:,None]
-color_scale = np.power(2,8*np.arange(4))
+color_scale = np.power(2,8*np.arange(3))
+
+recolor = np.array([[1,0,0,0],[0,1,0,.45],[0,0,1,.55]]).T
 
 m = [1.0,1.0,1.0,1.0]
 
@@ -68,6 +70,7 @@ def gravity(run_time):
 	
 		intensity = np.uint8(100*np.exp(-(X-x)**2./cloud_width**2.))
 	#	intensity = 255.*(abs(X-x)<cloud_width)
+		intensity = np.uint8(np.matmul(intensity,recolor))
 		colors = np.dot(color_scale, intensity.T)
 #		intensity = np.int_(intensity)
 	
