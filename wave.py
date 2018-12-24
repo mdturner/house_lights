@@ -29,7 +29,7 @@ def wave(strip, period, l, max, min):
     
     while lu.checkSwitch():
         for i in range(strip.numPixels()):
-            strip.setPixelColor(i,Color(0,0,int(offset+ A*math.sin(2*math.pi*(1.0*t/period - 1.0*i/l)))))
+            strip.setPixelColor(i,Color(0,0,int(offset+ A*(math.sin(2*math.pi*(1.0*t/period - 1.0*i/l))**3))))
 
         strip.show()
         t = t+1
@@ -45,5 +45,5 @@ if __name__ == '__main__':
     lu.makeSwitch()
     lu.blackOut(strip)
     
-    wave(strip, 300, 100, 50, 10)
+    wave(strip, 1500, 50, 50, 2)
     lu.blackOut(strip)
